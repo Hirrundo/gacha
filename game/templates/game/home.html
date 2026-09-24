@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HASBAND</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'game/style.css' %}">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">HASBAND</div>
+
+    <button class="login-button">
+        ВОЙТИ
+    </button>
+</header>
+
+<main>
+
+    <section class="hero">
+        <h1>Персонажи</h1>
+        <p>Выбери своего мужа. Если сможешь.</p>
+    </section>
+
+    <section class="characters">
+
+    {% for character in characters %}
+
+        <div class="character-card">
+
+            <div class="character-image">
+                {% if character.image %}
+                    <img src="{{ character.image.url }}" alt="{{ character.name }}">
+                {% else %}
+                    ФОТО
+                {% endif %}
+            </div>
+
+            <div class="character-name">
+                {{ character.name }}
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <p>Персонажей пока нет.</p>
+
+    {% endfor %}
+
+</section>
+
+</main>
+
+</body>
+</html>

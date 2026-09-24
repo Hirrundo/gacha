@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Гача</title>
+</head>
+
+<body>
+
+    <h1>🎴 Гача</h1>
+
+    <button id="draw-button">ВЫБИТЬ КАРТУ</button>
+
+    <div id="result"></div>
+
+    <script>
+        const button = document.getElementById('draw-button');
+        const result = document.getElementById('result');
+
+        button.addEventListener('click', async () => {
+            result.textContent = 'Крутим...';
+
+            const response = await fetch('/game/draw/');
+            const card = await response.json();
+
+            if (card.error) {
+                result.textContent = card.error;
+                return;
+            }
+
+            result.innerHTML = `
+                <h2>${card.name}</h2>
+                <p>Редкость: ${card.rarity}</p>
+                <p>${card.description}</p>
+            `;
+        });
+    </script>
+
+</body>
+</html>
