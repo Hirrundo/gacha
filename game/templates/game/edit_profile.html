@@ -1,0 +1,95 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Редактирование профиля — HASBAND</title>
+
+    <link rel="stylesheet" href="{% static 'game/style.css' %}">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">HASBAND</div>
+
+    <nav class="navigation">
+        <a href="{% url 'home' %}">
+            ГЛАВНАЯ
+        </a>
+
+        <a href="{% url 'gacha' %}">
+            ГАЧА
+        </a>
+
+        <a href="{% url 'profile' %}">
+            ПРОФИЛЬ
+        </a>
+    </nav>
+</header>
+
+<main class="edit-profile-page">
+
+    <div class="edit-profile-card">
+
+        <h1>РЕДАКТИРОВАНИЕ</h1>
+
+        <form method="post" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <div class="edit-profile-field">
+
+                <label for="username">
+                    Имя
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    value="{{ player.username }}"
+                    required
+                >
+
+            </div>
+
+            <div class="edit-profile-field">
+
+                <label for="avatar">
+                    Фотография
+                </label>
+
+                <input
+                    type="file"
+                    id="avatar"
+                    name="avatar"
+                    accept="image/*"
+                >
+
+            </div>
+
+            <div class="edit-profile-actions">
+
+                <a href="{% url 'profile' %}">
+                    ОТМЕНА
+                </a>
+
+                <button type="submit">
+                    СОХРАНИТЬ
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+</html>

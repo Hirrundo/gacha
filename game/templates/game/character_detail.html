@@ -1,0 +1,96 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ character.name }} — HASBAND</title>
+
+    <link rel="stylesheet" href="{% static 'game/style.css' %}">
+</head>
+
+<body>
+
+    <header>
+
+    <div class="logo">
+        HASBAND
+    </div>
+
+    {% if user.is_authenticated %}
+        <nav class="navigation">
+            <a href="{% url 'home' %}">ГЛАВНАЯ</a>
+            <a href="{% url 'gacha' %}">ГАЧА</a>
+            <button
+                type="button"
+                class="balance"
+                onclick="openExchange()"
+>
+                ❤️ {{ player.hearts }}
+                🎟️ {{ player.spins }}
+            </button>
+        <a href="{% url 'profile' %}" class="profile">
+            ПРОФИЛЬ
+        </a>
+        </nav>
+    {% else %}
+        <a href="{% url 'login' %}" class="login-button">
+            ВОЙТИ
+        </a>
+    {% endif %}
+
+</header>
+    <main>
+
+        <section class="character-page">
+
+              <div class="character-photo">
+        {% if character.image %}
+            <img src="{{ character.image.url }}" alt="{{ character.name }}">
+        {% else %}
+            ФОТО
+        {% endif %}
+    </div>
+
+    <div class="character-info">
+
+        <h1>{{ character.name }}</h1>
+
+        {% if character.description %}
+            <p>{{ character.description }}</p>
+        {% else %}
+            <p>Описание персонажа пока отсутствует.</p>
+        {% endif %}
+
+    </div>
+
+    <div class="interactions">
+
+        <h2>Взаимодействия</h2>
+        <button id="interaction-button-1" onclick="useInteraction(1)">1</button>
+        <button id="interaction-button-2" onclick="useInteraction(2)">2</button>
+        <button id="interaction-button-3" onclick="useInteraction(3)">3</button>
+        <button id="interaction-button-4" onclick="useInteraction(4)">4</button>
+        <button id="interaction-button-5" onclick="useInteraction(5)">5</button>
+        
+    </div>
+
+        </section>
+
+    </main>
+    <div id="character-data" data-character-id="{{ character.id }}"></div>
+    {%include 'game/includes/interaction_modal.html'%}
+    <div id="error-modal" class="error-modal">
+    <div class="error-modal-content">
+        <div id="error-message"></div>
+    </div>
+</div>
+    {% include 'game/includes/exchange_modal.html' %}
+    <script src="{% static 'game/exchange.js' %}"></script>
+    <script src="{% static 'game/script.js' %}"></script>
+</body>
+
+</html>

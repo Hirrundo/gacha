@@ -1,0 +1,60 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Вход — HASBAND</title>
+
+    <link rel="stylesheet" href="{% static 'game/style.css' %}">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">HASBAND</div>
+</header>
+
+<main class="login-page">
+
+    <div class="login-card">
+
+        <h1>Вход</h1>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="login-field">
+                <label for="username">Логин</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    required
+                >
+            </div>
+
+            <div class="login-field">
+                <label for="password">Пароль</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="login-submit">
+                ВОЙТИ
+            </button>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+</html>

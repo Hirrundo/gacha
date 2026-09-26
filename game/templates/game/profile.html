@@ -1,0 +1,196 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Профиль — HASBAND</title>
+
+    <link rel="stylesheet" href="{% static 'game/style.css' %}">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">HASBAND</div>
+
+    {% if user.is_authenticated %}
+        <nav class="navigation">
+
+            <a href="{% url 'home' %}">
+                ГЛАВНАЯ
+            </a>
+
+            <a href="{% url 'gacha' %}">
+                ГАЧА
+            </a>
+            <a href="{% url 'logout' %}" class="profile">
+                ВЫЙТИ
+            </a>
+
+        </nav>
+    {% endif %}
+</header>
+
+<main class="profile-page">
+
+    <section class="profile-heading">
+
+        <div>
+            <h1>ПРОФИЛЬ ИГРОКА</h1>
+
+            <div class="profile-username">
+                {{ player.username }}
+            </div>
+        </div>
+
+        <a href="{% url 'edit_profile' %}" class="profile-edit">
+    РЕДАКТИРОВАТЬ
+</a>
+
+    </section>
+
+    <section class="profile-layout">
+
+        <!-- ФОТО -->
+
+        <div class="profile-photo">
+
+    {% if player.avatar %}
+        <img
+            src="{{ player.avatar.url }}"
+            alt="{{ player.username }}"
+        >
+    {% else %}
+        ФОТО
+    {% endif %}
+
+</div>
+
+        <!-- СЧЁТЧИКИ + ПЕРСОНАЖИ -->
+
+        <div class="profile-info">
+
+            <div class="profile-balance">
+
+                <div class="profile-stat">
+                    <span>❤️</span>
+                    <strong>{{ player.hearts }}</strong>
+                </div>
+
+                <div class="profile-stat">
+                    <span>🎟️</span>
+                    <strong>{{ player.spins }}</strong>
+                </div>
+
+            </div>
+            <button
+                 type="button"
+                class="profile-exchange-button"
+                 onclick="openExchange()"
+>
+                ОБМЕН ❤️ → 🎟️
+            </button>
+           <details class="profile-characters">
+
+    <summary>
+        ПЕРСОНАЖИ
+    </summary>
+
+    <div class="profile-character-list">
+
+        {% for character in characters %}
+
+            <a
+                href="{% url 'character_detail' character.id %}"
+                class="profile-character"
+            >
+
+                <div class="profile-character-image">
+
+                    {% if character.image %}
+                        <img
+                            src="{{ character.image.url }}"
+                            alt="{{ character.name }}"
+                        >
+                    {% else %}
+                        ФОТО
+                    {% endif %}
+
+                </div>
+
+                <div class="profile-character-name">
+                    {{ character.name }}
+                </div>
+
+            </a>
+
+        {% endfor %}
+
+    </div>
+
+</details>
+        </div>
+
+        <!-- КОЛЛЕКЦИЯ СПРАВА -->
+
+        <details class="profile-collection">
+
+            <summary>
+                КОЛЛЕКЦИЯ
+            </summary>
+
+            <div class="collection-grid">
+
+                {% for item in collection %}
+
+                    <div class="collection-card">
+
+                        <div class="collection-card-image">
+
+                            {% if item.card.image %}
+
+                                <img
+                                    src="{{ item.card.image.url }}"
+                                    alt="{{ item.card.name }}"
+                                >
+
+                            {% else %}
+
+                                КАРТА
+
+                            {% endif %}
+
+                        </div>
+
+                        <div class="collection-card-name">
+                            {{ item.card.name }}
+                        </div>
+
+                    </div>
+
+                {% empty %}
+
+                    <p>
+                        Коллекция пока пуста.
+                    </p>
+{% endfor %}
+
+            </div>
+
+        </details>
+
+    </section>
+
+</main>
+{% include 'game/includes/exchange_modal.html' %}
+
+<script src="{% static 'game/exchange.js' %}"></script>
+</body>
+</html>
+
+
+

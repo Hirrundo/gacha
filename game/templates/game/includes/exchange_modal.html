@@ -1,0 +1,50 @@
+<div id="exchange-modal" class="exchange-modal">
+    {% csrf_token %}
+
+    <div class="exchange-modal-content">
+
+        <button
+            class="exchange-modal-close"
+            onclick="closeExchange()"
+        >
+            ×
+        </button>
+
+        <h2>ОБМЕН</h2>
+
+        <p class="exchange-balance">
+            ❤️ <span id="exchange-hearts">{{ player.hearts }}</span>
+            <span>→</span>
+            🎟️ <span id="exchange-spins">{{ player.spins }}</span>
+        </p>
+
+        <div class="exchange-options">
+
+            <button
+                onclick="exchangeHearts(5)"
+                class="exchange-option"
+            >
+                <span>5 ❤️</span>
+                <span>→</span>
+                <span>1 🎟️</span>
+            </button>
+
+            <button
+                onclick="exchangeHearts(25)"
+                class="exchange-option"
+            >
+                <span>25 ❤️</span>
+                <span>→</span>
+                <span>10 🎟️</span>
+            </button>
+
+        </div>
+
+        <div
+            id="exchange-error"
+            class="exchange-error"
+        ></div>
+
+    </div>
+
+</div>

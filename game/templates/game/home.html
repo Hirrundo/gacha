@@ -10,12 +10,62 @@
 
 <body>
 
-<header>
-    <div class="logo">HASBAND</div>
+{% if welcome_bonus %}
+    <div id="welcome-bonus-modal" class="welcome-bonus-modal active">
 
-    <button class="login-button">
-        ВОЙТИ
-    </button>
+        <div class="welcome-bonus-content">
+
+            <h2>ДОБРО ПОЖАЛОВАТЬ! 🎉</h2>
+
+            <p>
+                В честь приветствия вам начислены бонусы:
+            </p>
+
+            <div class="welcome-bonus-rewards">
+                <span>❤️ +10</span>
+                <span>🎟️ +10</span>
+            </div>
+
+            <button
+                type="button"
+                onclick="closeWelcomeBonus()"
+            >
+                ЗАБРАТЬ
+            </button>
+
+        </div>
+
+    </div>
+{% endif %}
+<header>
+
+    <div class="logo">
+        HASBAND
+    </div>
+
+    {% if user.is_authenticated %}
+        <nav class="navigation">
+            <a href="/game/">ГЛАВНАЯ</a>
+            <a href="/game/gacha/">ГАЧА</a>
+
+           <button
+        type="button"
+        class="balance"
+        onclick="openExchange()"
+>
+        ❤️ {{ player.hearts }}
+        🎟️ {{ player.spins }}
+        </button>
+          <a href="{% url 'profile' %}" class="profile">
+    ПРОФИЛЬ
+</a>
+        </nav>
+    {% else %}
+        <a href="{% url 'login' %}" class="login-button">
+    ВОЙТИ
+</a>
+    {% endif %}
+
 </header>
 
 <main>
@@ -28,7 +78,7 @@
     <section class="characters">
 
     {% for character in characters %}
-
+      <a href="{% url 'character_detail' character.id %}" class="character-link"> 
         <div class="character-card">
 
             <div class="character-image">
@@ -44,7 +94,7 @@
             </div>
 
         </div>
-
+    </a> 
     {% empty %}
 
         <p>Персонажей пока нет.</p>
@@ -54,6 +104,8 @@
 </section>
 
 </main>
+    {% include 'game/includes/exchange_modal.html' %}
 
+<script src="{% static 'game/exchange.js' %}"></script>
 </body>
 </html>
